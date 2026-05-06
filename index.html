@@ -23,65 +23,63 @@
             align-items: center;
         }
 
-        /* Ambient Outer Stage (Desktop View Only) */
+        /* The master 2160x1920 canvas */
         .stage {
             position: relative;
             width: 2160px;
             height: 1920px;
             display: flex;
             transform-origin: center;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-            border-radius: 4px;
-            overflow: hidden;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.85);
+            background: #000;
         }
 
-        /* LEFT SIDE: The Camping Dirt Environment */
+        /* LEFT SIDE: The Dirt Background */
         .left-environment {
             width: 1080px;
             height: 1920px;
-            background-image: url('dirt.jpg'); /* Your custom dirt texture asset */
+            background-image: url('dirt.jpg');
             background-size: cover;
             background-position: center;
+            background-color: #8a5a36; /* Fallback color */
             position: relative;
         }
 
-        /* The white paper/pages folder physical depth effect peeking out under the cover */
+        /* The physical paper fold-out layer peeking from behind the cover */
         .paper-fold-depth {
             position: absolute;
-            top: 60px;
+            top: 0;
             right: 0;
-            width: 150px;
-            height: 1800px;
-            background: #fffdf5;
-            box-shadow: -15px 0 30px rgba(0, 0, 0, 0.3);
-            border-radius: 4px 0 0 4px;
+            width: 110px;
+            height: 100%;
+            background: #fcfbf7;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
             z-index: 2;
         }
 
-        /* RIGHT SIDE: The Main Book Cover Page */
+        /* RIGHT SIDE: The Cover Page */
         .right-cover {
             width: 1080px;
             height: 1920px;
-            background-color: #dcd9cd; /* The precise warm vintage gray-cream page color */
+            background-color: #d0cdc1; /* The precise warm cream tone */
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 220px 80px 120px 80px;
-            border-left: 1px solid rgba(0, 0, 0, 0.15); /* Spine crease seam */
+            padding: 180px 100px 100px 100px;
             z-index: 3;
-            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+            box-shadow: -15px 0 45px rgba(0, 0, 0, 0.2);
         }
 
-        /* Spine shadow binding strip */
-        .book-spine-binding {
+        /* Subtle dark seam line at the spine fold */
+        .spine-fold-line {
             position: absolute;
             left: 0;
             top: 0;
-            width: 12px;
+            width: 1px;
             height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.05) 50%, rgba(0,0,0,0));
+            background-color: rgba(0, 0, 0, 0.25);
         }
 
         /* Cover Content Layout */
@@ -93,46 +91,65 @@
             text-align: center;
         }
 
-        /* Logo/Header Group */
+        /* Logo Area */
         .logo-container {
-            width: 680px;
-            margin-bottom: 20px;
+            width: 800px;
+            height: 220px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
         .logo-container img {
-            width: 100%;
-            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             display: block;
         }
 
-        .subtitle {
-            font-size: 26px;
-            font-weight: 800;
-            color: #0d0d0d;
+        /* HTML/CSS Fallback for the "SCOUT" logo if the image breaks */
+        .logo-fallback {
+            font-size: 140px;
+            font-weight: 900;
+            color: #e5a93b; /* Warm gold/yellow */
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: -0.03em;
+            /* Black outline and drop shadow matching your vector */
+            -webkit-text-stroke: 4px #2b2c30;
+            text-shadow: 8px 8px 0px #2b2c30;
+            font-family: 'Arial Black', Impact, sans-serif;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1c1c1c;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
             margin-bottom: 50px;
-            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .author-tag {
             font-family: "Courier New", Courier, monospace;
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 900;
-            color: #1a425a; /* Custom dark teal-blue tone */
+            color: #174059; /* Your dark blue/teal signature color */
             text-transform: uppercase;
-            letter-spacing: 0.02em;
-            margin-bottom: 70px;
+            letter-spacing: 0.05em;
+            margin-bottom: 80px;
         }
 
-        /* Illustration Frame Container */
+        /* The Illustration Frame */
         .illustration-container {
-            width: 780px;
-            height: 980px;
-            overflow: hidden;
+            width: 750px;
+            height: 950px;
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: transparent;
+            position: relative;
         }
 
         .illustration-container img {
@@ -141,30 +158,50 @@
             object-fit: contain;
         }
 
-        /* Responsive Scaling Engine (Desktop Viewports) */
+        /* If the sketch image is missing, we draw a clean placeholder box so layout stays perfect */
+        .illustration-placeholder {
+            width: 100%;
+            height: 100%;
+            border: 3px dashed #888;
+            background: rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Scaling logic for desktop vs full-screen mobile */
         @media (max-width: 768px) {
             .stage {
                 width: 100vw;
                 height: 100dvh;
                 transform: none !important;
                 box-shadow: none;
-                border-radius: 0;
             }
             .left-environment {
-                display: none; /* Hide the dirt and background stage on mobile */
+                display: none; /* Hide dirt side on mobile */
             }
             .right-cover {
                 width: 100vw;
                 height: 100dvh;
-                padding: 100px 40px;
+                padding: 80px 30px;
             }
             .logo-container {
                 width: 100%;
+                height: auto;
+                min-height: 120px;
+            }
+            .logo-fallback {
+                font-size: 80px;
+                -webkit-text-stroke: 2px #2b2c30;
+                text-shadow: 4px 4px 0px #2b2c30;
             }
             .illustration-container {
                 width: 100%;
                 height: auto;
-                max-height: 55vh;
+                max-height: 50vh;
             }
         }
     </style>
@@ -178,11 +215,12 @@
         </div>
 
         <div class="right-cover">
-            <div class="book-spine-binding"></div>
+            <div class="spine-fold-line"></div>
             
             <div class="cover-content">
                 <div class="logo-container">
-                    <img src="scout-logo.png" alt="SCOUT">
+                    <img id="scout-logo-img" src="scout-logo.png" alt="SCOUT" onerror="handleLogoError()">
+                    <div id="scout-logo-text" class="logo-fallback" style="display: none;">SCOUT</div>
                 </div>
                 
                 <p class="subtitle">Field Notes for the Talent Tracker</p>
@@ -190,7 +228,10 @@
                 <div class="author-tag">Justin Shubert</div>
                 
                 <div class="illustration-container">
-                    <img src="scout-sketch.png" alt="Scout Field Character Sketch">
+                    <img id="scout-sketch-img" src="scout-sketch.png" alt="Scout Field Character Sketch" onerror="handleSketchError()">
+                    <div id="scout-sketch-placeholder" class="illustration-placeholder" style="display: none;">
+                        <span>[ Place scout-sketch.png here ]</span>
+                    </div>
                 </div>
             </div>
             
@@ -199,7 +240,19 @@
     </div>
 
     <script>
-        // Scales the 2160x1920 viewport cleanly onto smaller laptop screens
+        // If the logo image fails to load, swap in our custom CSS-styled title
+        function handleLogoError() {
+            document.getElementById('scout-logo-img').style.display = 'none';
+            document.getElementById('scout-logo-text').style.display = 'block';
+        }
+
+        // If the sketch image fails to load, show a clean placeholder so layout doesn't break
+        function handleSketchError() {
+            document.getElementById('scout-sketch-img').style.display = 'none';
+            document.getElementById('scout-sketch-placeholder').style.display = 'flex';
+        }
+
+        // Automatic scaling engine to keep the canvas perfectly fit to any browser size
         function handleViewportScaling() {
             const stage = document.getElementById('master-stage');
             const targetWidth = 2160;
@@ -211,7 +264,6 @@
             if (windowWidth > 768) {
                 const scaleX = windowWidth / targetWidth;
                 const scaleY = windowHeight / targetHeight;
-                // Leave a tiny gap around the edge to see the stage breathing room
                 const scale = Math.min(scaleX, scaleY) * 0.96;
                 
                 stage.style.transform = `scale(${scale})`;
