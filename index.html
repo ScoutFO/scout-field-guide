@@ -1,113 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scout Field Guide</title>
-  <style>
-    body {
-      background-color: #55aaaa;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Courier New", Courier, monospace;
-      overflow: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scout Field Guide</title>
+    <style>
+        /* CSS Reset & Viewport Lock */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    /* 90s Beveled Window Chassis */
-    .window {
-      width: 400px;
-      height: 250px;
-      background-color: #c0c0c0;
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #808080;
-      border-bottom: 2px solid #808080;
-      box-shadow: 1px 1px 0 0 #000;
-      position: absolute;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-    }
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* Absolutely no scrolling */
+            background-color: #121212; /* Dark ambient backing */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
 
-    /* Blue Title Bar */
-    .title-bar {
-      height: 24px;
-      background: #000080;
-      color: white;
-      padding: 2px 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
-      font-size: 13px;
-      cursor: move;
-      box-sizing: border-box;
-    }
+        /* This container scales the entire 2160x1920 book spread 
+           to fit cleanly in any desktop browser window.
+        */
+        .viewport-container {
+            width: 2160px;
+            height: 1920px;
+            position: relative;
+            transform-origin: center;
+            display: flex;
+            justify-content: space-between;
+            background: #1e1e1e; /* Book spine backing */
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+        }
 
-    .title-text {
-      margin-left: 4px;
-    }
+        /* Individual Book Pages */
+        .page {
+            width: 1080px;
+            height: 1920px;
+            position: relative;
+            overflow: hidden;
+            background-color: #d1d1d1; /* Base page color */
+        }
 
-    /* Classic X Close Button */
-    .close-btn {
-      width: 16px;
-      height: 14px;
-      background-color: #c0c0c0;
-      border-top: 1px solid #fff;
-      border-left: 1px solid #fff;
-      border-right: 1px solid #808080;
-      border-bottom: 1px solid #808080;
-      color: black;
-      text-align: center;
-      line-height: 11px;
-      font-size: 9px;
-      font-weight: bold;
-      cursor: pointer;
-      box-sizing: border-box;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .page-left {
+            border-right: 2px solid #222; /* Spine crease */
+        }
 
-    .close-btn:active {
-      border-top: 1px solid #808080;
-      border-left: 1px solid #808080;
-      border-right: 1px solid #fff;
-      border-bottom: 1px solid #fff;
-      padding-top: 1px;
-      padding-left: 1px;
-    }
+        .page-right {
+            border-left: 2px solid #111; /* Spine crease */
+        }
 
-    /* Window Inner Content */
-    .window-body {
-      padding: 15px;
-      flex-grow: 1;
-      font-size: 14px;
-      color: #000;
-      line-height: 1.4;
-    }
-  </style>
+        /* Retro Window Chassis */
+        .window-chassis {
+            position: absolute;
+            background: #c0c0c0;
+            border-top: 4px solid #fff;
+            border-left: 4px solid #fff;
+            border-right: 4px solid #808080;
+            border-bottom: 4px solid #808080;
+            box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #808080;
+            padding: 4px;
+        }
+
+        .title-bar {
+            background: #000080;
+            color: #fff;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            width: 28px;
+            height: 28px;
+            background: #c0c0c0;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-right: 2px solid #808080;
+            border-bottom: 2px solid #808080;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .close-btn:active {
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+        }
+
+        .window-content {
+            padding: 20px;
+            font-size: 20px;
+            line-height: 1.5;
+            color: #000;
+        }
+
+        /* Specific positioned elements from your Figma design */
+        #window-left-main {
+            width: 880px;
+            height: 700px;
+            top: 150px;
+            left: 100px;
+        }
+
+        #window-right-main {
+            width: 880px;
+            height: 1200px;
+            top: 150px;
+            left: 100px;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="window">
-    
-    <div class="title-bar">
-      <span class="title-text">Scout Field Guide</span>
-      <button class="close-btn">×</button>
-    </div>
-    
-    <div class="window-body">
-      <p>Welcome to the Scout Field Guide.</p>
-      <p>System is online. Ready to start mocking up modules in Figma.</p>
+    <div class="viewport-container" id="book-spread">
+        
+        <div class="page page-left">
+            <div class="window-chassis" id="window-left-main">
+                <div class="title-bar">
+                    <span>Scout Field Guide - Vol. 1</span>
+                    <div class="close-btn">X</div>
+                </div>
+                <div class="window-content">
+                    <p>Welcome to the Scout Field Office. This guide is a living archive of creative projects, visual layouts, and tactical updates.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page page-right">
+            <div class="window-chassis" id="window-right-main">
+                <div class="title-bar">
+                    <span>System Diagnostics</span>
+                    <div class="close-btn">X</div>
+                </div>
+                <div class="window-content">
+                    <p>Log 05.06.2026: Establishing design connection...</p>
+                    <p>Pipeline: Fully operational.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-  </div>
+    <script>
+        // Automatic scaling engine to fit the 2160x1920 layout perfectly into the window
+        function scaleBook() {
+            const book = document.getElementById('book-spread');
+            const targetWidth = 2160;
+            const targetHeight = 1920;
+            
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // Add a 5% margin around the edges to let the dark background show
+            const scaleX = (windowWidth * 0.95) / targetWidth;
+            const scaleY = (windowHeight * 0.95) / targetHeight;
+            
+            // Scale proportionally based on the most restrictive dimension
+            const scale = Math.min(scaleX, scaleY);
+            
+            book.style.transform = `scale(${scale})`;
+        }
 
+        window.addEventListener('resize', scaleBook);
+        window.addEventListener('DOMContentLoaded', scaleBook);
+    </script>
 </body>
 </html>
