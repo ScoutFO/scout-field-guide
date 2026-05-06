@@ -1,26 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <style>
-        /* Put all your CSS code inside these style tags */
-        .window {
-            width: 400px;
-            height: 250px;
-            background-color: #c0c0c0;
-            border-top: 2px solid #fff;
-            border-left: 2px solid #fff;
-            border-right: 2px solid #808080;
-            border-bottom: 2px solid #808080;
-            box-shadow: 1px 1px 0 0 #000;
-            position: absolute;
-        }
-        /* ... the rest of your CSS ... */
-    </style>
-</head>
-<body style="background-color: #55aaaa; padding: 50px;">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scout Field Guide</title>
+  <style>
+    body {
+      background-color: #55aaaa;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Courier New", Courier, monospace;
+      overflow: hidden;
+    }
 
-    <div class="window">
-        </div>
+    /* 90s Beveled Window Chassis */
+    .window {
+      width: 400px;
+      height: 250px;
+      background-color: #c0c0c0;
+      border-top: 2px solid #fff;
+      border-left: 2px solid #fff;
+      border-right: 2px solid #808080;
+      border-bottom: 2px solid #808080;
+      box-shadow: 1px 1px 0 0 #000;
+      position: absolute;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Blue Title Bar */
+    .title-bar {
+      height: 24px;
+      background: #000080;
+      color: white;
+      padding: 2px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: move;
+      box-sizing: border-box;
+    }
+
+    .title-text {
+      margin-left: 4px;
+    }
+
+    /* Classic X Close Button */
+    .close-btn {
+      width: 16px;
+      height: 14px;
+      background-color: #c0c0c0;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #808080;
+      border-bottom: 1px solid #808080;
+      color: black;
+      text-align: center;
+      line-height: 11px;
+      font-size: 9px;
+      font-weight: bold;
+      cursor: pointer;
+      box-sizing: border-box;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .close-btn:active {
+      border-top: 1px solid #808080;
+      border-left: 1px solid #808080;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      padding-top: 1px;
+      padding-left: 1px;
+    }
+
+    /* Window Inner Content */
+    .window-body {
+      padding: 15px;
+      flex-grow: 1;
+      font-size: 14px;
+      color: #000;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="window">
+    
+    <div class="title-bar">
+      <span class="title-text">Scout Field Guide</span>
+      <button class="close-btn">×</button>
+    </div>
+    
+    <div class="window-body">
+      <p>Welcome to the Scout Field Guide.</p>
+      <p>System is online. Ready to start mocking up modules in Figma.</p>
+    </div>
+
+  </div>
 
 </body>
 </html>
