@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scout Field Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
         /* Reset and viewport lock */
         * {
@@ -15,9 +19,9 @@
         html, body {
             height: 100vh;
             width: 100vw;
-            overflow: hidden; /* No scrolling */
+            overflow: hidden;
             background-color: #0d0d0d;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -41,7 +45,7 @@
             background-image: url('dirt.jpg');
             background-size: cover;
             background-position: center;
-            background-color: #8a5a36; /* Fallback color */
+            background-color: #8a5a36;
             position: relative;
         }
 
@@ -61,18 +65,18 @@
         .right-cover {
             width: 1080px;
             height: 1920px;
-            background-color: #d0cdc1; /* The precise warm cream tone */
+            background-color: #d0cdc1; /* Cream page tone from your design */
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 180px 100px 100px 100px;
+            padding: 160px 100px 100px 100px;
             z-index: 3;
             box-shadow: -15px 0 45px rgba(0, 0, 0, 0.2);
         }
 
-        /* Subtle dark seam line at the spine fold */
+        /* Subtle spine fold shadow */
         .spine-fold-line {
             position: absolute;
             left: 0;
@@ -95,7 +99,7 @@
         .logo-container {
             width: 800px;
             height: 220px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -109,36 +113,49 @@
             display: block;
         }
 
-        /* HTML/CSS Fallback for the "SCOUT" logo if the image breaks */
+        /* Fallback logo styling matching your yellow, outlined design */
         .logo-fallback {
-            font-size: 140px;
+            font-size: 150px;
             font-weight: 900;
-            color: #e5a93b; /* Warm gold/yellow */
+            color: #d19f37; /* Mustard yellow */
             text-transform: uppercase;
-            letter-spacing: -0.03em;
-            /* Black outline and drop shadow matching your vector */
+            letter-spacing: -0.04em;
             -webkit-text-stroke: 4px #2b2c30;
             text-shadow: 8px 8px 0px #2b2c30;
-            font-family: 'Arial Black', Impact, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
+        /* FIELD NOTES FOR THE TALENT TRACKER Subtitle */
         .subtitle {
-            font-size: 28px;
-            font-weight: 800;
-            color: #1c1c1c;
+            font-family: 'Inter', sans-serif;
+            font-size: 26px;
+            font-weight: 900; /* Extra black weight */
+            color: #1a1a1a;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
-            margin-bottom: 50px;
+            letter-spacing: 0.04em; /* Tightened tracking to match sketch */
+            margin-bottom: 45px;
         }
 
+        /* JUSTIN SHUBERT 3D Text Stack Style */
         .author-tag {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 36px;
-            font-weight: 900;
-            color: #174059; /* Your dark blue/teal signature color */
+            font-family: 'Inter', sans-serif;
+            font-size: 38px;
+            font-weight: 900; /* Ultra-bold */
+            color: #4da6c6; /* Teal face color */
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 80px;
+            letter-spacing: -0.02em;
+            margin-bottom: 70px;
+            
+            /* Sharp outline stroke */
+            -webkit-text-stroke: 2px #111215;
+            
+            /* Layered shadow to construct a clean 3D physical block shadow */
+            text-shadow: 
+                1px 1px 0px #111215,
+                2px 2px 0px #111215,
+                3px 3px 0px #111215,
+                4px 4px 0px #111215,
+                5px 5px 0px #111215;
         }
 
         /* The Illustration Frame */
@@ -156,23 +173,10 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            display: block;
         }
 
-        /* If the sketch image is missing, we draw a clean placeholder box so layout stays perfect */
-        .illustration-placeholder {
-            width: 100%;
-            height: 100%;
-            border: 3px dashed #888;
-            background: rgba(0,0,0,0.02);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #666;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        /* Scaling logic for desktop vs full-screen mobile */
+        /* Responsive scaling logic */
         @media (max-width: 768px) {
             .stage {
                 width: 100vw;
@@ -181,7 +185,7 @@
                 box-shadow: none;
             }
             .left-environment {
-                display: none; /* Hide dirt side on mobile */
+                display: none;
             }
             .right-cover {
                 width: 100vw;
@@ -197,6 +201,19 @@
                 font-size: 80px;
                 -webkit-text-stroke: 2px #2b2c30;
                 text-shadow: 4px 4px 0px #2b2c30;
+            }
+            .subtitle {
+                font-size: 18px;
+                margin-bottom: 25px;
+            }
+            .author-tag {
+                font-size: 26px;
+                margin-bottom: 40px;
+                -webkit-text-stroke: 1.5px #111215;
+                text-shadow: 
+                    1px 1px 0px #111215,
+                    2px 2px 0px #111215,
+                    3px 3px 0px #111215;
             }
             .illustration-container {
                 width: 100%;
@@ -219,7 +236,7 @@
             
             <div class="cover-content">
                 <div class="logo-container">
-                    <img id="scout-logo-img" src="scout-logo.png" alt="SCOUT" onerror="handleLogoError()">
+                    <img id="scout-logo-img" src="scout-Logo.png" alt="SCOUT" onerror="handleLogoError()">
                     <div id="scout-logo-text" class="logo-fallback" style="display: none;">SCOUT</div>
                 </div>
                 
@@ -228,10 +245,7 @@
                 <div class="author-tag">Justin Shubert</div>
                 
                 <div class="illustration-container">
-                    <img id="scout-sketch-img" src="scout-sketch.png" alt="Scout Field Character Sketch" onerror="handleSketchError()">
-                    <div id="scout-sketch-placeholder" class="illustration-placeholder" style="display: none;">
-                        <span>[ Place scout-sketch.png here ]</span>
-                    </div>
+                    <img id="scout-sketch-img" src="scout-sketch.png" alt="Scout Field Character Sketch">
                 </div>
             </div>
             
@@ -240,19 +254,13 @@
     </div>
 
     <script>
-        // If the logo image fails to load, swap in our custom CSS-styled title
+        // Fallback to stylized text if logo file is missing
         function handleLogoError() {
             document.getElementById('scout-logo-img').style.display = 'none';
             document.getElementById('scout-logo-text').style.display = 'block';
         }
 
-        // If the sketch image fails to load, show a clean placeholder so layout doesn't break
-        function handleSketchError() {
-            document.getElementById('scout-sketch-img').style.display = 'none';
-            document.getElementById('scout-sketch-placeholder').style.display = 'flex';
-        }
-
-        // Automatic scaling engine to keep the canvas perfectly fit to any browser size
+        // Automatic page scaling to fit layout perfectly in viewports
         function handleViewportScaling() {
             const stage = document.getElementById('master-stage');
             const targetWidth = 2160;
