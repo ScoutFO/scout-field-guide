@@ -15,148 +15,228 @@
         html, body {
             height: 100vh;
             width: 100vw;
-            overflow: hidden; /* Absolutely no scrolling */
-            background-color: #121212; /* Dark ambient backing */
+            overflow: hidden; /* No scrolling */
+            background-color: #0d0d0d;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Courier New', Courier, monospace;
         }
 
-        /* This container scales the entire 2160x1920 book spread 
-           to fit cleanly in any desktop browser window.
+        /* Ambient Dirt Texture Background */
+        .ambient-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('dirt-texture.jpg'); /* Your custom dirt texture from Figma */
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.4) contrast(1.1); /* Keeps it deep and atmospheric */
+            z-index: 1;
+        }
+
+        /* The Master Book Container (2160x1920 Spread)
+           Maintains your exact canvas scale and aspect ratio.
         */
-        .viewport-container {
+        .book-spread {
+            position: relative;
+            z-index: 2;
             width: 2160px;
             height: 1920px;
-            position: relative;
-            transform-origin: center;
             display: flex;
-            justify-content: space-between;
-            background: #1e1e1e; /* Book spine backing */
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+            background-color: #f7f5f0; /* The natural off-white page background you selected */
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9), 
+                        0 15px 35px rgba(0, 0, 0, 0.7);
+            border-radius: 6px;
+            overflow: hidden;
+            transform-origin: center;
         }
 
-        /* Individual Book Pages */
+        /* The Spine shadow running down the middle */
+        .book-spine {
+            position: absolute;
+            left: 1080px;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.15));
+            z-index: 10;
+        }
+
+        /* Individual Left/Right Pages */
         .page {
             width: 1080px;
             height: 1920px;
             position: relative;
-            overflow: hidden;
-            background-color: #d1d1d1; /* Base page color */
+            padding: 120px 100px; /* Precise margins matching your Figma spacing */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .page-left {
-            border-right: 2px solid #222; /* Spine crease */
+            background: linear-gradient(to right, #ece9e2, #f7f5f0 95%);
         }
 
         .page-right {
-            border-left: 2px solid #111; /* Spine crease */
+            background: linear-gradient(to left, #ece9e2, #f7f5f0 95%);
         }
 
-        /* Retro Window Chassis */
-        .window-chassis {
-            position: absolute;
-            background: #c0c0c0;
-            border-top: 4px solid #fff;
-            border-left: 4px solid #fff;
-            border-right: 4px solid #808080;
-            border-bottom: 4px solid #808080;
-            box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #808080;
-            padding: 4px;
+        /* Custom Editorial Typography & Layout from your design */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 2px solid #222;
+            padding-bottom: 24px;
         }
 
-        .title-bar {
-            background: #000080;
-            color: #fff;
-            padding: 6px 10px;
-            font-weight: bold;
+        .category-tag {
             font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #222;
+        }
+
+        .page-number {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 28px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        /* Custom Hand-Drawn Frame Aesthetic */
+        .sketch-frame {
+            border: 3px solid #222;
+            background: #fff;
+            padding: 16px;
+            box-shadow: 8px 8px 0px #222;
+            position: relative;
+        }
+
+        .sketch-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #ddd;
+        }
+
+        .journal-title {
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1.1;
+            color: #1a1a1a;
+            letter-spacing: -0.02em;
+        }
+
+        .journal-text {
+            font-size: 28px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Footer styling */
+        .footer-section {
+            border-top: 1px solid #ccc;
+            padding-top: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .close-btn {
-            width: 28px;
-            height: 28px;
-            background: #c0c0c0;
-            border-top: 2px solid #fff;
-            border-left: 2px solid #fff;
-            border-right: 2px solid #808080;
-            border-bottom: 2px solid #808080;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
+        .footer-label {
             font-size: 18px;
-            font-weight: bold;
-            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #777;
         }
 
-        .close-btn:active {
-            border-top: 2px solid #808080;
-            border-left: 2px solid #808080;
-            border-right: 2px solid #fff;
-            border-bottom: 2px solid #fff;
-        }
-
-        .window-content {
-            padding: 20px;
-            font-size: 20px;
-            line-height: 1.5;
-            color: #000;
-        }
-
-        /* Specific positioned elements from your Figma design */
-        #window-left-main {
-            width: 880px;
-            height: 700px;
-            top: 150px;
-            left: 100px;
-        }
-
-        #window-right-main {
-            width: 880px;
-            height: 1200px;
-            top: 150px;
-            left: 100px;
+        /* Responsive Mobile Layout Override */
+        @media (max-width: 768px) {
+            .ambient-background {
+                display: none; /* Strip out heavy backing on phone viewports */
+            }
+            .book-spread {
+                width: 100vw;
+                height: 100dvh;
+                max-width: 100vw;
+                max-height: 100dvh;
+                transform: none !important;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .book-spine {
+                display: none;
+            }
+            .page-left {
+                width: 100vw;
+                height: 100dvh;
+                padding: 60px 40px;
+            }
+            .page-right {
+                display: none; /* Mobile defaults to a single-page view */
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="viewport-container" id="book-spread">
+    <div class="ambient-background"></div>
+
+    <div class="book-spread" id="book-spread">
+        <div class="book-spine"></div>
         
         <div class="page page-left">
-            <div class="window-chassis" id="window-left-main">
-                <div class="title-bar">
-                    <span>Scout Field Guide - Vol. 1</span>
-                    <div class="close-btn">X</div>
-                </div>
-                <div class="window-content">
-                    <p>Welcome to the Scout Field Office. This guide is a living archive of creative projects, visual layouts, and tactical updates.</p>
-                </div>
+            <div class="header-section">
+                <span class="category-tag">Field Notes</span>
+                <span class="page-number">01</span>
+            </div>
+            
+            <div class="main-content">
+                <h1 class="journal-title">Scout Field Office</h1>
+                <p class="journal-text">A living tactical log designed to map ideas, structures, and creative explorations. Designed inside a clean, interactive spread optimized for both cinematic desktop screens and full-screen mobile viewports.</p>
+            </div>
+            
+            <div class="footer-section">
+                <span class="footer-label">Scout FO © 2026</span>
+                <span class="footer-label">Volume One</span>
             </div>
         </div>
 
         <div class="page page-right">
-            <div class="window-chassis" id="window-right-main">
-                <div class="title-bar">
-                    <span>System Diagnostics</span>
-                    <div class="close-btn">X</div>
+            <div class="header-section">
+                <span class="category-tag">Visual Log</span>
+                <span class="page-number">02</span>
+            </div>
+            
+            <div class="main-content">
+                <div class="sketch-frame">
+                    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=1000&auto=format&fit=crop" alt="Vintage Field Notebook Sketch">
                 </div>
-                <div class="window-content">
-                    <p>Log 05.06.2026: Establishing design connection...</p>
-                    <p>Pipeline: Fully operational.</p>
-                </div>
+                <p class="journal-text">This landscape canvas holds interactive modules, retro widgets, and visual layouts designed to be navigated sequentially like a physical field journal.</p>
+            </div>
+            
+            <div class="footer-section">
+                <span class="footer-label">Diagnostic System</span>
+                <span class="footer-label">Operational</span>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Automatic scaling engine to fit the 2160x1920 layout perfectly into the window
+        // Scaling engine to perfectly frame the 2160x1920 spread on desktop viewports
         function scaleBook() {
             const book = document.getElementById('book-spread');
             const targetWidth = 2160;
@@ -165,14 +245,17 @@
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
             
-            // Add a 5% margin around the edges to let the dark background show
-            const scaleX = (windowWidth * 0.95) / targetWidth;
-            const scaleY = (windowHeight * 0.95) / targetHeight;
-            
-            // Scale proportionally based on the most restrictive dimension
-            const scale = Math.min(scaleX, scaleY);
-            
-            book.style.transform = `scale(${scale})`;
+            // Only apply scaling on desktop sizes
+            if (windowWidth > 768) {
+                // Ensure the book fits within both width and height constraints
+                const scaleX = (windowWidth * 0.90) / targetWidth;
+                const scaleY = (windowHeight * 0.90) / targetHeight;
+                const scale = Math.min(scaleX, scaleY);
+                
+                book.style.transform = `scale(${scale})`;
+            } else {
+                book.style.transform = 'none';
+            }
         }
 
         window.addEventListener('resize', scaleBook);
