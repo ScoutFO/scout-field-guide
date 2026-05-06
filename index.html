@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scout Field Guide</title>
     <style>
-        /* CSS Reset & Viewport Lock */
+        /* Reset and viewport lock */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -17,249 +17,211 @@
             width: 100vw;
             overflow: hidden; /* No scrolling */
             background-color: #0d0d0d;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Ambient Dirt Texture Background */
-        .ambient-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('dirt-texture.jpg'); /* Your custom dirt texture from Figma */
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.4) contrast(1.1); /* Keeps it deep and atmospheric */
-            z-index: 1;
-        }
-
-        /* The Master Book Container (2160x1920 Spread)
-           Maintains your exact canvas scale and aspect ratio.
-        */
-        .book-spread {
+        /* Ambient Outer Stage (Desktop View Only) */
+        .stage {
             position: relative;
-            z-index: 2;
             width: 2160px;
             height: 1920px;
             display: flex;
-            background-color: #f7f5f0; /* The natural off-white page background you selected */
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9), 
-                        0 15px 35px rgba(0, 0, 0, 0.7);
-            border-radius: 6px;
-            overflow: hidden;
             transform-origin: center;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        /* The Spine shadow running down the middle */
-        .book-spine {
-            position: absolute;
-            left: 1080px;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.15));
-            z-index: 10;
-        }
-
-        /* Individual Left/Right Pages */
-        .page {
+        /* LEFT SIDE: The Camping Dirt Environment */
+        .left-environment {
             width: 1080px;
             height: 1920px;
-            position: relative;
-            padding: 120px 100px; /* Precise margins matching your Figma spacing */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .page-left {
-            background: linear-gradient(to right, #ece9e2, #f7f5f0 95%);
-        }
-
-        .page-right {
-            background: linear-gradient(to left, #ece9e2, #f7f5f0 95%);
-        }
-
-        /* Custom Editorial Typography & Layout from your design */
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            border-bottom: 2px solid #222;
-            padding-bottom: 24px;
-        }
-
-        .category-tag {
-            font-size: 24px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #222;
-        }
-
-        .page-number {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 28px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 40px;
-        }
-
-        /* Custom Hand-Drawn Frame Aesthetic */
-        .sketch-frame {
-            border: 3px solid #222;
-            background: #fff;
-            padding: 16px;
-            box-shadow: 8px 8px 0px #222;
+            background-image: url('dirt.jpg'); /* Your custom dirt texture asset */
+            background-size: cover;
+            background-position: center;
             position: relative;
         }
 
-        .sketch-frame img {
+        /* The white paper/pages folder physical depth effect peeking out under the cover */
+        .paper-fold-depth {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 150px;
+            height: 1800px;
+            background: #fffdf5;
+            box-shadow: -15px 0 30px rgba(0, 0, 0, 0.3);
+            border-radius: 4px 0 0 4px;
+            z-index: 2;
+        }
+
+        /* RIGHT SIDE: The Main Book Cover Page */
+        .right-cover {
+            width: 1080px;
+            height: 1920px;
+            background-color: #dcd9cd; /* The precise warm vintage gray-cream page color */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 220px 80px 120px 80px;
+            border-left: 1px solid rgba(0, 0, 0, 0.15); /* Spine crease seam */
+            z-index: 3;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Spine shadow binding strip */
+        .book-spine-binding {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.05) 50%, rgba(0,0,0,0));
+        }
+
+        /* Cover Content Layout */
+        .cover-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Logo/Header Group */
+        .logo-container {
+            width: 680px;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
             width: 100%;
             height: auto;
             display: block;
-            border: 1px solid #ddd;
         }
 
-        .journal-title {
-            font-size: 64px;
+        .subtitle {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0d0d0d;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 50px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .author-tag {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 32px;
             font-weight: 900;
-            line-height: 1.1;
-            color: #1a1a1a;
-            letter-spacing: -0.02em;
+            color: #1a425a; /* Custom dark teal-blue tone */
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 70px;
         }
 
-        .journal-text {
-            font-size: 28px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        /* Footer styling */
-        .footer-section {
-            border-top: 1px solid #ccc;
-            padding-top: 24px;
+        /* Illustration Frame Container */
+        .illustration-container {
+            width: 780px;
+            height: 980px;
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
 
-        .footer-label {
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #777;
+        .illustration-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
-        /* Responsive Mobile Layout Override */
+        /* Responsive Scaling Engine (Desktop Viewports) */
         @media (max-width: 768px) {
-            .ambient-background {
-                display: none; /* Strip out heavy backing on phone viewports */
-            }
-            .book-spread {
+            .stage {
                 width: 100vw;
                 height: 100dvh;
-                max-width: 100vw;
-                max-height: 100dvh;
                 transform: none !important;
                 box-shadow: none;
                 border-radius: 0;
             }
-            .book-spine {
-                display: none;
+            .left-environment {
+                display: none; /* Hide the dirt and background stage on mobile */
             }
-            .page-left {
+            .right-cover {
                 width: 100vw;
                 height: 100dvh;
-                padding: 60px 40px;
+                padding: 100px 40px;
             }
-            .page-right {
-                display: none; /* Mobile defaults to a single-page view */
+            .logo-container {
+                width: 100%;
+            }
+            .illustration-container {
+                width: 100%;
+                height: auto;
+                max-height: 55vh;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-background"></div>
-
-    <div class="book-spread" id="book-spread">
-        <div class="book-spine"></div>
+    <div class="stage" id="master-stage">
         
-        <div class="page page-left">
-            <div class="header-section">
-                <span class="category-tag">Field Notes</span>
-                <span class="page-number">01</span>
-            </div>
-            
-            <div class="main-content">
-                <h1 class="journal-title">Scout Field Office</h1>
-                <p class="journal-text">A living tactical log designed to map ideas, structures, and creative explorations. Designed inside a clean, interactive spread optimized for both cinematic desktop screens and full-screen mobile viewports.</p>
-            </div>
-            
-            <div class="footer-section">
-                <span class="footer-label">Scout FO © 2026</span>
-                <span class="footer-label">Volume One</span>
-            </div>
+        <div class="left-environment">
+            <div class="paper-fold-depth"></div>
         </div>
 
-        <div class="page page-right">
-            <div class="header-section">
-                <span class="category-tag">Visual Log</span>
-                <span class="page-number">02</span>
-            </div>
+        <div class="right-cover">
+            <div class="book-spine-binding"></div>
             
-            <div class="main-content">
-                <div class="sketch-frame">
-                    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=1000&auto=format&fit=crop" alt="Vintage Field Notebook Sketch">
+            <div class="cover-content">
+                <div class="logo-container">
+                    <img src="scout-logo.png" alt="SCOUT">
                 </div>
-                <p class="journal-text">This landscape canvas holds interactive modules, retro widgets, and visual layouts designed to be navigated sequentially like a physical field journal.</p>
+                
+                <p class="subtitle">Field Notes for the Talent Tracker</p>
+                
+                <div class="author-tag">Justin Shubert</div>
+                
+                <div class="illustration-container">
+                    <img src="scout-sketch.png" alt="Scout Field Character Sketch">
+                </div>
             </div>
             
-            <div class="footer-section">
-                <span class="footer-label">Diagnostic System</span>
-                <span class="footer-label">Operational</span>
-            </div>
         </div>
 
     </div>
 
     <script>
-        // Scaling engine to perfectly frame the 2160x1920 spread on desktop viewports
-        function scaleBook() {
-            const book = document.getElementById('book-spread');
+        // Scales the 2160x1920 viewport cleanly onto smaller laptop screens
+        function handleViewportScaling() {
+            const stage = document.getElementById('master-stage');
             const targetWidth = 2160;
             const targetHeight = 1920;
             
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
             
-            // Only apply scaling on desktop sizes
             if (windowWidth > 768) {
-                // Ensure the book fits within both width and height constraints
-                const scaleX = (windowWidth * 0.90) / targetWidth;
-                const scaleY = (windowHeight * 0.90) / targetHeight;
-                const scale = Math.min(scaleX, scaleY);
+                const scaleX = windowWidth / targetWidth;
+                const scaleY = windowHeight / targetHeight;
+                // Leave a tiny gap around the edge to see the stage breathing room
+                const scale = Math.min(scaleX, scaleY) * 0.96;
                 
-                book.style.transform = `scale(${scale})`;
+                stage.style.transform = `scale(${scale})`;
             } else {
-                book.style.transform = 'none';
+                stage.style.transform = 'none';
             }
         }
 
-        window.addEventListener('resize', scaleBook);
-        window.addEventListener('DOMContentLoaded', scaleBook);
+        window.addEventListener('resize', handleViewportScaling);
+        window.addEventListener('DOMContentLoaded', handleViewportScaling);
     </script>
 </body>
 </html>
