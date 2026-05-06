@@ -5,24 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scout Field Guide</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* Loading your actual custom Bobby Jones font files from your GitHub repository */
-        @font-face {
-            font-family: 'Bobby Jones Soft Regular';
-            src: url('BobbyJonesSoft-Regular.otf') format('opentype'),
-                 url('BobbyJonesSoft-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Bobby Jones Soft Outline';
-            src: url('BobbyJonesSoft-Outline.otf') format('opentype'),
-                 url('BobbyJonesSoft-Outline.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         /* Reset and viewport lock */
         * {
             box-sizing: border-box;
@@ -35,7 +22,7 @@
             width: 100vw;
             overflow: hidden;
             background-color: #0d0d0d;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Outfit', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -129,49 +116,36 @@
 
         /* FIELD NOTES FOR THE TALENT TRACKER Subtitle */
         .subtitle {
-            font-family: 'Bobby Jones Soft Regular', sans-serif;
-            font-size: 32px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
             color: #1a1a1a;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.04em;
             margin-bottom: 45px;
         }
 
-        /* Reconstructing your physical 3D stacked text look for your name */
-        .author-container {
-            position: relative;
-            width: 100%;
-            height: 60px;
-            margin-bottom: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* The background shadow/outline layers of the 3D stack */
-        .author-shadow-layer {
-            position: absolute;
-            font-family: 'Bobby Jones Soft Outline', sans-serif;
-            font-size: 44px;
-            color: #111215;
-            text-transform: uppercase;
-        }
-
-        /* The offset values mimicking your exact vector stacking */
-        .offset-5 { transform: translate(5px, 5px); }
-        .offset-4 { transform: translate(4px, 4px); }
-        .offset-3 { transform: translate(3px, 3px); }
-        .offset-2 { transform: translate(2px, 2px); }
-        .offset-1 { transform: translate(1px, 1px); }
-
-        /* The main front-facing teal text layer */
-        .author-front-layer {
-            position: absolute;
-            font-family: 'Bobby Jones Soft Regular', sans-serif;
-            font-size: 44px;
+        /* 3D Stacking style for Justin Shubert signature */
+        .author-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 38px;
+            font-weight: 900;
             color: #4da6c6; /* Teal face color */
             text-transform: uppercase;
-            z-index: 10;
+            letter-spacing: -0.02em;
+            margin-bottom: 70px;
+            
+            /* High-definition stroke outline */
+            -webkit-text-stroke: 3px #111215;
+            
+            /* Custom offset shadow layout to construct 3D depth */
+            text-shadow: 
+                1px 1px 0px #111215,
+                2px 2px 0px #111215,
+                3px 3px 0px #111215,
+                4px 4px 0px #111215,
+                5px 5px 0px #111215,
+                6px 6px 0px #111215;
         }
 
         /* The Illustration Frame */
@@ -214,15 +188,17 @@
                 min-height: 120px;
             }
             .subtitle {
-                font-size: 20px;
+                font-size: 18px;
                 margin-bottom: 25px;
             }
-            .author-container {
-                height: 40px;
+            .author-tag {
+                font-size: 26px;
                 margin-bottom: 40px;
-            }
-            .author-front-layer, .author-shadow-layer {
-                font-size: 30px;
+                -webkit-text-stroke: 1.5px #111215;
+                text-shadow: 
+                    1px 1px 0px #111215,
+                    2px 2px 0px #111215,
+                    3px 3px 0px #111215;
             }
             .illustration-container {
                 width: 100%;
@@ -250,17 +226,10 @@
                 
                 <p class="subtitle">Field Notes for the Talent Tracker</p>
                 
-                <div class="author-container">
-                    <div class="author-shadow-layer offset-5">Justin Shubert</div>
-                    <div class="author-shadow-layer offset-4">Justin Shubert</div>
-                    <div class="author-shadow-layer offset-3">Justin Shubert</div>
-                    <div class="author-shadow-layer offset-2">Justin Shubert</div>
-                    <div class="author-shadow-layer offset-1">Justin Shubert</div>
-                    <div class="author-front-layer">Justin Shubert</div>
-                </div>
+                <div class="author-tag">Justin Shubert</div>
                 
                 <div class="illustration-container">
-                    <img src="scout-sketch.png" alt="Scout Field Character Sketch">
+                    <img id="sketch-img" src="scout-sketch.png" alt="Scout Field Character Sketch">
                 </div>
             </div>
             
@@ -269,6 +238,14 @@
     </div>
 
     <script>
+        // Force the browser to refresh the image cache for the sketch
+        window.addEventListener('DOMContentLoaded', () => {
+            const sketch = document.getElementById('sketch-img');
+            if (sketch) {
+                sketch.src = 'scout-sketch.png?v=' + new Date().getTime();
+            }
+        });
+
         // Handle page scaling to fit standard desktops and high-res screens
         function handleViewportScaling() {
             const stage = document.getElementById('master-stage');
